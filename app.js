@@ -1,69 +1,62 @@
-const layerButton = document.createElement('button');
-const moveButton = document.createElement('button');
+
+
+const MOVEBUTTON = document.createElement('button');
+const LAYER_BUTTON = document.createElement('button');
+const HIDE_BUTTON = document.createElement('button');
+const MOVE_BUTTON_NORTH = document.createElement('button');
+const MOVE_BUTTON_SOUTH = document.createElement('button');
+const MOVE_BUTTON_WEST = document.createElement('button');
+const MOVE_BUTTON_EAST = document.createElement('button');
 let buttonBarDivId = document.getElementById("buttonDiv");
 
-moveButton.style.backgroundColor = 'aquamarine';
-moveButton.textContent = 'move Icon';
 
-// Set the position to 'fixed' to position it relative to the viewport
-// moveButton.style.position = 'fixed';
-
-// Position the button on the right side
-// moveButton.style.right = '20px';
-//
-// // Position the button a bit higher from the top
-// moveButton.style.top = '7%';
-
-moveButton.style.width = '58px';
-moveButton.style.height = '38px';
+MOVEBUTTON.style.backgroundColor = 'aquamarine';
+MOVEBUTTON.textContent = 'move Icon';
+MOVEBUTTON.style.width = '58px';
+MOVEBUTTON.style.height = '38px';
 
 //document.body.appendChild(moveButton);
 
+HIDE_BUTTON.style.width = '58px';
+HIDE_BUTTON.style.height = '38px';
+HIDE_BUTTON.textContent = 'hide icon';
+HIDE_BUTTON.style.backgroundColor = 'coral';
 
 
-
-buttonBarDivId.appendChild(moveButton);
-
-
-buttonBarDivId.appendChild(layerButton);
-layerButton.style.backgroundColor = 'chartreuse';
-layerButton.textContent = 'change layer';
-
-// Set the position to 'fixed' to position it relative to the viewport
-// layerButton.style.position = 'fixed';
-//
-// // Position the button on the right side
-// layerButton.style.right = '20px';
-//
-// // Position the button a bit higher from the top
-// layerButton.style.top = '12%';
-
-layerButton.style.width = '58px';
-layerButton.style.height = '38px';
+LAYER_BUTTON.style.width = '58px';
+LAYER_BUTTON.style.height = '38px';
+LAYER_BUTTON.textContent = 'change layer';
+LAYER_BUTTON.style.backgroundColor = 'chartreuse';
 
 
+MOVE_BUTTON_NORTH.style.width = '58px';
+MOVE_BUTTON_NORTH.style.height = '38px';
+MOVE_BUTTON_NORTH.textContent = 'move north';
+MOVE_BUTTON_NORTH.style.backgroundColor = 'yellow';
+
+MOVE_BUTTON_SOUTH.style.width = '58px';
+MOVE_BUTTON_SOUTH.style.height = '38px';
+MOVE_BUTTON_SOUTH.textContent = 'move south';
+MOVE_BUTTON_SOUTH.style.backgroundColor = 'yellow';
+
+MOVE_BUTTON_EAST.style.width = '58px';
+MOVE_BUTTON_EAST.style.height = '38px';
+MOVE_BUTTON_EAST.textContent = 'move east';
+MOVE_BUTTON_EAST.style.backgroundColor = 'yellow';
+
+MOVE_BUTTON_WEST.style.width = '58px';
+MOVE_BUTTON_WEST.style.height = '38px';
+MOVE_BUTTON_WEST.textContent = 'move west';
+MOVE_BUTTON_WEST.style.backgroundColor = 'yellow';
 
 
+buttonBarDivId.appendChild(MOVEBUTTON);
+buttonBarDivId.appendChild(MOVE_BUTTON_NORTH);
+buttonBarDivId.appendChild(MOVE_BUTTON_EAST);
+buttonBarDivId.appendChild(MOVE_BUTTON_WEST);
+buttonBarDivId.appendChild(MOVE_BUTTON_SOUTH);
+buttonBarDivId.appendChild(LAYER_BUTTON);
+buttonBarDivId.appendChild(HIDE_BUTTON);
 
-//document.body.appendChild(layerButton);
 
-
-
-// layerButton.onclick(changeColor());
-// function changeColor() {
-//     document.body.style.color = "red";
-//     return false;
-// }
-
-// function colorChange() {
-//     //layerButton.style.backgroundColor = 'red';
-//     const myImageryLayer = new Cesium.ImageryLayer(new Cesium.OpenStreetMapImageryProvider({
-//         url: "https://tile.openstreetmap.org/"
-//     }));
-//     scene.imageryLayers.add(myImageryLayer);
-// }
-//
-//
-//
-//     layerButton.addEventListener('click', colorChange);
 

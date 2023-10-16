@@ -86,7 +86,7 @@
 
     )
 
-    const infrantryUnit = viewer.entities.add({
+    var infrantryUnit = viewer.entities.add({
         position: Cesium.Cartesian3.fromDegrees(-106.77802176389179, 32.305969917912826),
         billboard: {
             image: "../Cesium/Apps/SampleData/Infantry_NATO_APP-6.svg.png",
@@ -95,10 +95,10 @@
             height: 32,
         },
         label: {
-            text: "Nato Infantry",
-            font: '16pt "Times New Roman"',
+           // text: "Nato Infantry",
+           // font: '16pt "Times New Roman"',
             style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-            fillColor: Cesium.Color.BLUE,
+            fillColor: Cesium.Color.WHITE,
             outlineWidth: 2,
             verticalOrigin: Cesium.VerticalOrigin.TOP,
             pixelOffset: new Cesium.Cartesian2(0, 32),
@@ -107,35 +107,138 @@
 
     })
 
-    function colorChange(viewer) {
+    let colorCount = false;
+    let buttonCount = false;
+    let moveCount = false;
+//Why are these counts working outside the function but not inside?
+    function colorChange() {
+       // var colorCount = 0;
+        if (colorCount === false) {
 
-        layerButton.style.backgroundColor = 'red';
+            const myImageryLayer = new Cesium.ImageryLayer(
+                new Cesium.OpenStreetMapImageryProvider({
+                    url: "https://tile.openstreetmap.org/",
+                })
+            );
 
 
-        const myImageryLayer = new Cesium.ImageryLayer(
-            new Cesium.OpenStreetMapImageryProvider({
-            url: "https://tile.openstreetmap.org/",
-            })
-        );
+            viewer.scene.imageryLayers.add(myImageryLayer);
+            LAYER_BUTTON.style.backgroundColor = 'red'
+            colorCount = true;
 
-
-       viewer.scene.imageryLayers.add(myImageryLayer);
-        //transportLayer.show = true;
-
-
+        } else {
+            const transportLayer = viewer.scene.imageryLayers.addImageryProvider(thunderforestTransportProvider)
+            LAYER_BUTTON.style.backgroundColor = 'chartreuse'
+            colorCount = false;
+        }
 
     }
 
+    function buttonHide(viewer) {
+      //  var buttonCount = 0;
+        console.log("Hide Button", buttonCount);
+        if (buttonCount === false) {
+
+            infrantryUnit.billboard.show = false;
 
 
-    layerButton.addEventListener('click', function() {
+            HIDE_BUTTON.style.backgroundColor = 'red'
+
+
+            buttonCount = true;
+        }
+
+        else {
+            infrantryUnit.billboard.show = true;
+            HIDE_BUTTON.style.backgroundColor = 'coral'
+            buttonCount = false;
+        }
+
+
+       // buttonHide(viewer);
+    }
+    function moveUnit(viewer) {
+    if (moveCount === false) {
+        infrantryUnit.position = Cesium.Cartesian3.fromDegrees(-106.77861221981614, 32.30526482854694)
+        console.log("1st POS", infrantryUnit.position);
+        MOVEBUTTON.style.backgroundColor = 'chartreuse';
+        moveCount = true;
+    }
+
+        else {
+        infrantryUnit.position = Cesium.Cartesian3.fromDegrees(-106.77802176389179, 32.305969917912826)
+        console.log("2nd POS", infrantryUnit.position);
+        MOVEBUTTON.style.backgroundColor = 'red';
+        moveCount = false;
+    }
+
+    }
+
+    function moveButtonNorth(viewer){
+
+
+       let latLonPos = Cesium.Cartographic.fromCartesian(infrantryUnit.position.getValue(Cesium.JulianDate.now()));
+       console.log("latlonPos", latLonPos);
+       latLonPos.latitude += Cesium.Math.toRadians(.001);
+        console.log("pos change", latLonPos.latitude)
+       const newPosition = Cesium.Cartesian3.fromRadians(latLonPos.longitude, latLonPos.latitude, 0.0);
+
+        infrantryUnit.position = newPosition;
+    }
+
+    function moveButtonSouth(){
+        let latLonPos1 = Cesium.Cartographic.fromCartesian(infrantryUnit.position.getValue(Cesium.JulianDate.now()));
+        console.log("latlonPos", latLonPos1);
+        latLonPos1.latitude += Cesium.Math.toRadians(-.001);
+
+        const newPosition = Cesium.Cartesian3.fromRadians(latLonPos1.longitude, latLonPos1.latitude, 0.0);
+        infrantryUnit.position = newPosition;
+    }
+    function moveButtonEast(){
+        let latLonPos1 = Cesium.Cartographic.fromCartesian(infrantryUnit.position.getValue(Cesium.JulianDate.now()));
+        console.log("latlonPos", latLonPos1);
+        latLonPos1.longitude += Cesium.Math.toRadians(.001);
+
+        const newPosition = Cesium.Cartesian3.fromRadians(latLonPos1.longitude, latLonPos1.latitude, 0.0);
+        infrantryUnit.position = newPosition;
+    }
+    function moveButtonWest(){
+        let latLonPos1 = Cesium.Cartographic.fromCartesian(infrantryUnit.position.getValue(Cesium.JulianDate.now()));
+        console.log("latlonPos", latLonPos1);
+        latLonPos1.longitude += Cesium.Math.toRadians(-.001);
+
+        const newPosition = Cesium.Cartesian3.fromRadians(latLonPos1.longitude, latLonPos1.latitude, 0.0);
+        infrantryUnit.position = newPosition;
+    }
+
+    MOVE_BUTTON_NORTH.addEventListener('click', function () {
+        moveButtonNorth(viewer);
+        }
+    );
+    MOVE_BUTTON_SOUTH.addEventListener('click', (event) => {
+        console.log(event)
+        moveButtonSouth(viewer);
+    });
+    MOVE_BUTTON_EAST.addEventListener('click', (event) => {
+        console.log(event)
+        moveButtonEast(viewer);
+    });
+    MOVE_BUTTON_WEST.addEventListener('click', (event) => {
+        console.log(event)
+        moveButtonWest(viewer);
+    });
+    LAYER_BUTTON.addEventListener('click', function() {
         colorChange(viewer);
     });
 
 
+    HIDE_BUTTON.addEventListener('click', function() {
+        buttonHide(viewer);
+    });
 
-
-
+    MOVEBUTTON.addEventListener('click', function (){
+        moveUnit(viewer)
+    })
 </script>
 <script src="app.js"></script>
 </body>
